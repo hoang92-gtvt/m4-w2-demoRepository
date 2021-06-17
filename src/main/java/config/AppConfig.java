@@ -20,10 +20,10 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
-import repository.IStudentRepository;
-import repository.StudentRepository;
-import service.IStudentService;
-import service.StudentService;
+import repository.student.IStudentRepository;
+import repository.student.StudentRepository;
+import service.student.IStudentService;
+import service.student.StudentService;
 
 
 import javax.persistence.EntityManager;
