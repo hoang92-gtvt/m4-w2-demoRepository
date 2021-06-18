@@ -14,11 +14,11 @@ public class StudentForm {
     public StudentForm() {
     }
 
-    public StudentForm(Long id, String firstName, String lastName, Category category, MultipartFile img) {
+    public StudentForm(Long id, String firstName, String lastName, MultipartFile img) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.category = category;
+
         this.img = img;
     }
 

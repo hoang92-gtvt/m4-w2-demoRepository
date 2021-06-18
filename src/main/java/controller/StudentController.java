@@ -34,7 +34,7 @@ public class StudentController {
 //    private Environment environment;
 
     @Value("${file-upload}")
-    private String file_address;
+    private String fileUpload;
 
 //khai bao thuoc tinh luon mang theo cho cac reponse
     @ModelAttribute("categories")
@@ -48,6 +48,7 @@ public class StudentController {
         Iterable<Student> studentList = studentService.findAll();
         ModelAndView modelAndView = new ModelAndView("/student/list");
         modelAndView.addObject("students", studentList);
+        System.out.println(fileUpload);
         return modelAndView;
     }
 
@@ -64,7 +65,7 @@ public class StudentController {
     public ModelAndView saveCustomer(@ModelAttribute("student") StudentForm studentForm) {
         MultipartFile multipartFile = studentForm.getImg();
         String file_name = multipartFile.getOriginalFilename();
-        String pathName = file_address+ file_name;
+        String pathName = fileUpload+ file_name;
         try{
             FileCopyUtils.copy(multipartFile.getBytes(), new File(pathName));
 
@@ -75,9 +76,11 @@ public class StudentController {
 
         Student student = new Student();
         student.setId(studentForm.getId()) ;
-        student.setFirstName(studentForm.getFirstName()); ;
-        student.setLastName(studentForm.getLastName()); ;
-        student.setId(studentForm.getId()) ;
+        student.setFirstName(studentForm.getFirstName());
+        student.setLastName(studentForm.getLastName());
+        student.setCategory(studentForm.getCategory());
+        student.setImg(file_name);
+
         studentService.save(student);
 
  //tra view xac nhan

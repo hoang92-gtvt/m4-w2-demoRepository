@@ -5,15 +5,25 @@
     <title>Edit Student</title>
 </head>
 <body>
-<h1>Edit Student</h1>
-<p>
-    <a href="/home">Student list</a>
-</p>
+
+<h1>Old Student</h1>
+
+
+
+
 <th:block th:if="${message}">
     <p th:text="${message}"></p>
 </th:block>
+
+<p>--------------------------------------------------------------------------</p>
+
+<p>
+    <a href="/home">Student list</a>
+</p>
+<h1>Edit Student</h1>
 <form th:action="@{/edit}" th:object="${student}" method="post">
     <input th:type="hidden" name="id" th:field="*{id}">
+
     <table>
         <tr>
             <td>First name:</td>
@@ -22,6 +32,17 @@
         <tr>
             <td>Last name:</td>
             <td><input type="text" th:field="*{lastName}"/></td>
+        </tr>
+
+        <tr>
+            <td>Category</td>
+            <td>
+                <select th:field="${student.category}">
+                <th:block th:each="c: ${categories}" >
+                    <option th:value="${c.id}" th:text="${c.name}"></option>
+                </th:block>
+                </select>
+            </td>
         </tr>
         <tr>
             <td></td>

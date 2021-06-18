@@ -153,6 +153,15 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
 
 //end
 
+//ghi de phuong thuc tao doi tuong tu id
+    @Override
+    public void addFormatters(FormatterRegistry registry){
+        registry.addFormatter(
+                new CategoryFormatter(applicationContext.getBean(CategoryService.class)));
+    }
+
+
+
 
 //config doi tuong
 //start
@@ -166,11 +175,7 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
         return new CategoryService();
     }
 
-//    @Override
-//    public void addFormatters(FormatterRegistry registry){
-//        registry.addFormatter(
-//                new CategoryFormatter(applicationContext.getBean(CategoryService.class)));
-//    }
+
 
 
 
