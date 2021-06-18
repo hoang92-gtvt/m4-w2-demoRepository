@@ -12,7 +12,8 @@
 <th:block th:if="${message}">
     <p th:text="${message}"></p>
 </th:block>
-<form th:action="@{/create}" th:object="${student}" method="post">
+<form th:action="@{/create}" th:object="${student}" method="post"
+      enctype="multipart/form-data" novalidate="novalidate">
     <table>
         <tr>
             <td>First name:</td>
@@ -21,6 +22,25 @@
         <tr>
             <td>Last name:</td>
             <td><input type="text" th:field="*{lastName}"/></td>
+        </tr>
+
+        <tr>
+            <td>Category</td>
+            <td>
+                <select th:field="*{category}" >
+                    <th:block th:each="c: ${categories}" >
+                        <option th:text="${c.name}" th:value="${c.id}"></option>
+                    </th:block>
+
+                 </select>
+            </td>
+
+        </tr>
+        <tr>
+            <td>Image</td>
+            <td>
+                <input type="file" th:field="*{img}"/>
+            </td>
         </tr>
         <tr>
             <td></td>

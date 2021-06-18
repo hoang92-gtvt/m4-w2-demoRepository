@@ -1,25 +1,20 @@
 package model;
 
-import javax.persistence.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.ManyToOne;
 
-@Entity
-@Table
-public class Student {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class StudentForm {
     private Long id;
     private String firstName;
     private String lastName;
-    @ManyToOne
     private Category category;
-    private String img;
+    private MultipartFile img;
 
-
-    public Student() {
+    public StudentForm() {
     }
 
-    public Student(Long id, String firstName, String lastName, Category category, String img) {
+    public StudentForm(Long id, String firstName, String lastName, Category category, MultipartFile img) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -59,11 +54,11 @@ public class Student {
         this.category = category;
     }
 
-    public String getImg() {
+    public MultipartFile getImg() {
         return img;
     }
 
-    public void setImg(String img) {
+    public void setImg(MultipartFile img) {
         this.img = img;
     }
 }

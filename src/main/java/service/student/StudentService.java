@@ -2,29 +2,25 @@ package service.student;
 
 import model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
-import repository.student.IStudentRepository;
+import org.springframework.stereotype.Service;
+import repository.IStudentRepository;
 
 import java.util.List;
 
+@Service
 public class StudentService implements IStudentService {
 
     @Autowired
     private IStudentRepository studentRepository;
 
     @Override
-    public boolean insertWithStoredProcedure(Student student) {
-        return studentRepository.insertWithStoredProcedure(student);
-    }
-
-
-    @Override
     public List<Student> findAll() {
-        return studentRepository.findAll();
+        return (List<Student>) studentRepository.findAll();
     }
 
     @Override
     public Student findById(Long id) {
-        return studentRepository.findById(id);
+        return studentRepository.findOne(id);
     }
 
     @Override
@@ -34,6 +30,6 @@ public class StudentService implements IStudentService {
 
     @Override
     public void remove(Long id) {
-        studentRepository.remove(id);
+        studentRepository.delete(id);
     }
 }
