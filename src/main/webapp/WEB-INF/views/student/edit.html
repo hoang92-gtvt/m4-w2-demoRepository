@@ -8,6 +8,22 @@
 
 <h1>Old Student</h1>
 
+<table th:object="${student}">
+    <tr>
+        <td>First name:</td>
+        <td>Last name:</td>
+        <td>Category Name:</td>
+        <td>Image:</td>
+    </tr>
+    <tr>
+
+        <td><input type="text" th:value="${student.firstName}" disabled/></td>
+        <td><input type="text" th:value="${student.lastName}" disabled/></td>
+        <td><input type="text" th:value="${student.category.name}" disabled/></td>
+        <td><img th:src="@{'/image/'+${student.img}}" th:alt="${student.img}"/> </td>
+    </tr>
+
+</table>
 
 
 
@@ -21,8 +37,11 @@
     <a href="/home">Student list</a>
 </p>
 <h1>Edit Student</h1>
-<form th:action="@{/edit}" th:object="${student}" method="post">
-    <input th:type="hidden" name="id" th:field="*{id}">
+
+<form th:action="@{/edit}" th:object="${studentForm}" method="post"
+        enctype="multipart/form-data" >
+
+    <input th:type="hidden" name="id" th:field="${student.id}">
 
     <table>
         <tr>
@@ -37,18 +56,28 @@
         <tr>
             <td>Category</td>
             <td>
-                <select th:field="${student.category}">
+                <select th:field="*{category}">
                 <th:block th:each="c: ${categories}" >
                     <option th:value="${c.id}" th:text="${c.name}"></option>
                 </th:block>
                 </select>
+
             </td>
         </tr>
+        <tr>
+            <td>Img</td>
+            <td>
+                <input type="file" th:field="*{img}" th:value="${student.img}" >
+            </td>
+        </tr>
+
         <tr>
             <td></td>
             <td><input type="submit" value="Update student"></td>
         </tr>
     </table>
 </form>
+
+
 </body>
 </html>

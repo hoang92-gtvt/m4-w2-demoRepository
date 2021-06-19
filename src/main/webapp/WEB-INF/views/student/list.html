@@ -24,10 +24,13 @@
             <td th:text="${student.lastName}"></td>
             <td th:text="${student.category.name}"></td>
             <td >
-                <img width="100" height="100" th:src="@{'/image/' + ${student.img}}"
+                <img width="100px" height="100px" th:src="@{'/image/' + ${student.img}}"
                      th:alt="${student.img}">
 
             </td>
+
+
+
 
 
             <td><a th:href="@{/edit/{id}(id=${student.id})}">Edit</a></td>

@@ -33,6 +33,6 @@ public class CategoryFormatter implements Formatter<Category> {
 
     @Override
     public String print(Category object, Locale locale) {
-        return null;
+        return "[" + object.getId() + ", " +object.getName() + "]";
     }
 }

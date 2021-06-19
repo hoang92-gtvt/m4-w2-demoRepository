@@ -52,7 +52,7 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
 
     ApplicationContext applicationContext;
 
-    @Value("${file-upload")
+    @Value("${file-upload}")
     private String fileUpload;
 
     @Override

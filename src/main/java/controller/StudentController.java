@@ -45,7 +45,7 @@ public class StudentController {
 
     @GetMapping("/home")
     public ModelAndView listCustomers() {
-        Iterable<Student> studentList = studentService.findAll();
+        List<Student> studentList = studentService.findAll();
         ModelAndView modelAndView = new ModelAndView("/student/list");
         modelAndView.addObject("students", studentList);
         System.out.println(fileUpload);
@@ -62,7 +62,7 @@ public class StudentController {
     }
 
     @PostMapping("/create")
-    public ModelAndView saveCustomer(@ModelAttribute("student") StudentForm studentForm) {
+    public ModelAndView saveCustomer(@ModelAttribute( name="student") StudentForm studentForm) {
         MultipartFile multipartFile = studentForm.getImg();
         String file_name = multipartFile.getOriginalFilename();
         String pathName = fileUpload+ file_name;
@@ -99,6 +99,7 @@ public class StudentController {
         if (student != null) {
             ModelAndView modelAndView = new ModelAndView("/student/edit");
             modelAndView.addObject("student", student);
+            modelAndView.addObject("studentForm", new StudentForm());
             return modelAndView;
 
         } else {
@@ -108,8 +109,28 @@ public class StudentController {
     }
 
     @PostMapping("/edit")
-    public ModelAndView updateCustomer(@ModelAttribute("student") Student student) {
+    public ModelAndView updateCustomer(StudentForm studentForm) {
+
+        MultipartFile multipartFile = studentForm.getImg();
+        String fileName = multipartFile.getOriginalFilename();
+        String pathName = fileUpload+ fileName;
+        try{
+            FileCopyUtils.copy(multipartFile.getBytes(), new File(pathName));
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        Student student = new Student();
+
+        student.setId(studentForm.getId());
+        student.setFirstName(studentForm.getFirstName());
+        student.setLastName(studentForm.getLastName());
+        student.setCategory(studentForm.getCategory());
+        student.setImg(fileName);
+
         studentService.save(student);
+
         ModelAndView modelAndView = new ModelAndView("/student/edit");
         modelAndView.addObject("student", student);
         modelAndView.addObject("message", "Customer updated successfully");
@@ -133,8 +154,8 @@ public class StudentController {
     }
 
     @PostMapping("/delete")
-    public String deleteCustomer(@ModelAttribute("student") Student student) {
-        studentService.remove(student.getId());
+    public String deleteCustomer(@ModelAttribute("student") Student student1) {
+        studentService.remove(student1.getId());
         return "redirect:/home";
     }
 
