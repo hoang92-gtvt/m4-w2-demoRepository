@@ -21,11 +21,11 @@ public class StudentForm {
     @Min(18)
     private Long age;
 
-    @Pattern(regexp = "(^[a-z][?]*$)", message = "bat dau bang chu thuong")
-    @Pattern(regexp = "(^?[0-9a-zA-z/.]*@[/.a-zA-Z ]{2,5}$)", message = "phai co @")
+    @Pattern(regexp = "(^[a-z]*$)", message = "bat dau bang chu thuong")
+    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "phai co @")
     private String email;
 
-    @Pattern(regexp = "(^0[0-9]{9,10}$)")
+    @Pattern(regexp = "(^0[0-9]{9,10}$)", message = "start by 0 and lengthOfPhone is 10 or 11")
     private String phone;
 
     private Category category;

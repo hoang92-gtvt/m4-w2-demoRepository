@@ -13,37 +13,37 @@
     <p th:text="${message}"></p>
 </th:block>
 <form th:action="@{/create}" th:object="${student}" method="post"
-      enctype="multipart/form-data" novalidate="novalidate">
+      enctype="multipart/form-data">
     <table>
         <tr>
             <td>First name:</td>
             <td><input type="text" th:field="*{firstName}"/>
-            <label th:if="${#fields.hasErrors('firstName')}" th:error="*{firstName}"></label>
+            <label  th:errors="*{firstName}"></label>
             </td>
         </tr>
         <tr>
             <td>Last name:</td>
             <td><input type="text" th:field="*{lastName}"/>
-            <label th:if="${#fields.hasErrors('lastName')}" th:error="*{lastName}"></label>
+            <label  th:errors="*{lastName}"></label>
             </td>
         </tr>
 
         <tr>
             <td>Age:</td>
             <td><input type="number" th:field="*{age}"/>
-                <label th:if="${#fields.hasErrors('age')}" th:error="*{age}"></label>
+                <label  th:errors="*{age}"></label>
             </td>
         </tr>
         <tr>
             <td>Email:</td>
             <td><input type="text" th:field="*{email}"/>
-                <label th:if="${#fields.hasErrors('email')}" th:error="*{email}"></label>
+                <label  th:errors="*{email}"></label>
             </td>
         </tr>
         <tr>
             <td>Phone:</td>
             <td><input type="text" th:field="*{phone}"/>
-                <label th:if="${#fields.hasErrors('phone')}" th:error="*{phone}"></label>
+                <label th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></label>
             </td>
         </tr>
 

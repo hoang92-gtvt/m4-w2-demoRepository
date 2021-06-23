@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,11 +65,11 @@ public class StudentController {
     }
 
     @PostMapping("/create")
-    public ModelAndView saveCustomer(@Valid @ModelAttribute( name="student") StudentForm studentForm, BindingResult bindingResult) {
+    public ModelAndView saveCustomer(@Validated @ModelAttribute("student") StudentForm studentForm, BindingResult bindingResult) {
 
-////        if(bindingResult.hasFieldErrors()){
-//            return new ModelAndView("/student/create");
-//        }
+        if(bindingResult.hasErrors()){
+            return new ModelAndView("/student/create");
+        }
 
         MultipartFile multipartFile = studentForm.getImg();
         String file_name = multipartFile.getOriginalFilename();

@@ -49,7 +49,6 @@ import java.util.Properties;
 @EnableTransactionManagement
 @EnableJpaRepositories("repository")
 @PropertySource("classpath:file_upload.properties")
-
 @EnableAspectJAutoProxy
 
 
