@@ -1,16 +1,17 @@
 package config;
+import aspect.MyLogger;
 import formatter.CategoryFormatter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.*;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -39,6 +40,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
 @Configuration
@@ -47,6 +49,9 @@ import java.util.Properties;
 @EnableTransactionManagement
 @EnableJpaRepositories("repository")
 @PropertySource("classpath:file_upload.properties")
+
+@EnableAspectJAutoProxy
+
 
 public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
 
@@ -139,8 +144,10 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
         registry.addResourceHandler("/image/**")
                 .addResourceLocations("file:" + fileUpload);
+        System.out.println(fileUpload);
     }
 
 
@@ -156,10 +163,44 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
 //ghi de phuong thuc tao doi tuong tu id
     @Override
     public void addFormatters(FormatterRegistry registry){
-        registry.addFormatter(
-                new CategoryFormatter(applicationContext.getBean(CategoryService.class)));
+//        DateTimeFormatter formatter = new DateTimeFormatter();
+//        formatter.
+            ICategoryService  iCategoryService=applicationContext.getBean(CategoryService.class);
+            registry.addFormatter(new CategoryFormatter(iCategoryService));
+
+
+
+
+
     }
 
+//    @Override
+//    public void addFormatters(FormatterRegistry registry) {
+//        StringToLocalDateConverter stringToLocalDateConverter = new
+//                StringToLocalDateConverter("MM/dd/yyyy");
+//        registry.addConverter(stringToLocalDateConverter);
+//    }
+
+
+
+//Cau hinh validator
+//    @Bean
+//    public MessageSource messageSource() {
+//        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+//        messageSource.setBasenames("email_validator");
+//        return messageSource;
+//    }
+//    @Bean
+//    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+//        return new PropertySourcesPlaceholderConfigurer();
+//    }
+
+//Cau hinh aspect
+
+    @Bean
+    public MyLogger myLogger(){
+        return new MyLogger();
+    }
 
 
 
@@ -178,5 +219,5 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
 
 
 
-
 }
+

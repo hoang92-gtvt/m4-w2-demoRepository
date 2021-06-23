@@ -12,6 +12,9 @@
     <tr>
         <th>First name</th>
         <th>Last name</th>
+        <th>Email</th>
+        <th>Phone</th>
+
         <th>Category</th>
         <th>Image</th>
 
@@ -22,16 +25,14 @@
         <tr>
             <td th:text="${student.firstName}"></td>
             <td th:text="${student.lastName}"></td>
+            <td th:text="${student.email}"></td>
+            <td th:text="${student.phone}"></td>
+
             <td th:text="${student.category.name}"></td>
             <td >
                 <img width="100px" height="100px" th:src="@{'/image/' + ${student.img}}"
                      th:alt="${student.img}">
-
             </td>
-
-
-
-
 
             <td><a th:href="@{/edit/{id}(id=${student.id})}">Edit</a></td>
             <td><a th:href="@{/delete/__${student.id}__ }">Delete</a></td>

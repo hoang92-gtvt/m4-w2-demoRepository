@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import service.category.ICategoryService;
 import service.student.IStudentService;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.util.List;
 
@@ -62,7 +64,12 @@ public class StudentController {
     }
 
     @PostMapping("/create")
-    public ModelAndView saveCustomer(@ModelAttribute( name="student") StudentForm studentForm) {
+    public ModelAndView saveCustomer(@Valid @ModelAttribute( name="student") StudentForm studentForm, BindingResult bindingResult) {
+
+////        if(bindingResult.hasFieldErrors()){
+//            return new ModelAndView("/student/create");
+//        }
+
         MultipartFile multipartFile = studentForm.getImg();
         String file_name = multipartFile.getOriginalFilename();
         String pathName = fileUpload+ file_name;
@@ -72,18 +79,19 @@ public class StudentController {
         }catch(Exception e){
             e.printStackTrace();
         }
-
-
         Student student = new Student();
         student.setId(studentForm.getId()) ;
         student.setFirstName(studentForm.getFirstName());
         student.setLastName(studentForm.getLastName());
+        student.setAge(studentForm.getAge());
+        student.setEmail(studentForm.getEmail());
+        student.setPhone(studentForm.getPhone());
         student.setCategory(studentForm.getCategory());
         student.setImg(file_name);
 
         studentService.save(student);
 
- //tra view xac nhan
+        //tra view xac nhan
         ModelAndView modelAndView = new ModelAndView("/student/create");
         modelAndView.addObject("student", studentForm);
         modelAndView.addObject("message", "New customer created successfully");
